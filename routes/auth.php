@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -60,5 +61,33 @@ Route::middleware('auth')->group(function () {
 
 
     ///Routes For Subscriptions plans Crud
+    Route::get('/subscription-plans', [SubscriptionPlanController::class, 'index'])
+        ->name('subscription-plans.index');
 
+    Route::get('/subscription-plans/create', [SubscriptionPlanController::class, 'create'])
+        ->name('subscription-plans.create');
+
+    Route::post('/subscription-plans', [SubscriptionPlanController::class, 'store'])
+        ->name('subscription-plans.store');
+
+    Route::get('/subscription-plans/{id}/edit', [SubscriptionPlanController::class, 'edit'])
+        ->name('subscription-plans.edit');
+
+    Route::put('/subscription-plans/{id}', [SubscriptionPlanController::class, 'update'])
+        ->name('subscription-plans.update');
+
+    Route::delete('/subscription-plans/{id}', [SubscriptionPlanController::class, 'destroy'])
+        ->name('subscription-plans.destroy');
+
+    Route::get('/subscription-plans/{id}/pay', [SubscriptionPlanController::class, 'pay'])
+        ->middleware('auth')
+        ->name('subscription-plans.pay');
+
+    Route::get('/subscription-plans/payment/success', [SubscriptionPlanController::class, 'success'])
+        ->middleware('auth')
+        ->name('subscription-plans.payment.success');
+
+    Route::get('/subscription-plans/payment/cancel', [SubscriptionPlanController::class, 'cancel'])
+        ->middleware('auth')
+        ->name('subscription-plans.payment.cancel');
 });
